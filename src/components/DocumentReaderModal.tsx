@@ -13,6 +13,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Maximize2,
+  Trash2,
 } from 'lucide-react';
 import { type QuestionPaper } from '../types/paper';
 
@@ -21,6 +22,7 @@ interface DocumentReaderModalProps {
   onClose: () => void;
   paper: QuestionPaper | null;
   onDownload: (paper: QuestionPaper) => void;
+  onDelete?: (paper: QuestionPaper) => void;
   onCompareSet?: (paper: QuestionPaper) => void;
   isDark: boolean;
 }
@@ -30,6 +32,7 @@ export const DocumentReaderModal: React.FC<DocumentReaderModalProps> = ({
   onClose,
   paper,
   onDownload,
+  onDelete,
   onCompareSet,
   isDark,
 }) => {
@@ -266,6 +269,25 @@ export const DocumentReaderModal: React.FC<DocumentReaderModalProps> = ({
                 <Download className="w-4 h-4" />
                 <span className="hidden sm:inline">Download</span>
               </button>
+
+              {onDelete && (
+                <button
+                  onClick={() => {
+                    if (window.confirm(`Are you sure you want to delete ${paper.subject} (${paper.set})?`)) {
+                      onClose();
+                      onDelete(paper);
+                    }
+                  }}
+                  title="Delete Paper"
+                  className={`p-2.5 rounded-xl transition-all cursor-pointer ${
+                    isDark
+                      ? 'liquid-glass-btn-subtle text-rose-400 hover:text-rose-300 hover:bg-rose-500/10'
+                      : 'bg-white hover:bg-rose-50 text-rose-600 border border-rose-200'
+                  }`}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
 
               <button
                 onClick={onClose}

@@ -129,6 +129,21 @@ export function App() {
     showToast('Viewing paper document');
   };
 
+  const handleDeletePaper = async (paper: QuestionPaper) => {
+    try {
+      await PaperStorage.deletePaper(paper.id);
+      setPapers((prev) => prev.filter((p) => p.id !== paper.id));
+      if (selectedPaperForReader?.id === paper.id) {
+        setReaderModalOpen(false);
+        setSelectedPaperForReader(null);
+      }
+      showToast(`Deleted ${paper.subject} (${paper.set})`);
+    } catch (err) {
+      console.error('Failed to delete paper:', err);
+      showToast('Failed to delete paper');
+    }
+  };
+
   const handleOpenUploadForExam = (
     subject: string,
     examDate: string,
@@ -193,6 +208,7 @@ export function App() {
           papers={papers}
           onViewPaper={handleViewPaper}
           onDownloadPaper={handleDownloadPaper}
+          onDeletePaper={handleDeletePaper}
           onUploadForExamSet={handleOpenUploadForExam}
           searchQuery={searchQuery}
         />
@@ -228,6 +244,7 @@ export function App() {
           onClose={() => setReaderModalOpen(false)}
           paper={selectedPaperForReader}
           onDownload={handleDownloadPaper}
+          onDelete={handleDeletePaper}
           isDark={isDark}
         />
       )}

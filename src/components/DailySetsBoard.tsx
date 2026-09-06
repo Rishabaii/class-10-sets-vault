@@ -9,6 +9,7 @@ import {
   Share2,
   FileText,
   Filter,
+  Trash2,
 } from 'lucide-react';
 import { type QuestionPaper, type PaperSet } from '../types/paper';
 import { GRADE_10_SUBJECTS } from '../data/mockPapers';
@@ -17,6 +18,7 @@ interface DailySetsBoardProps {
   papers: QuestionPaper[];
   onViewPaper: (paper: QuestionPaper) => void;
   onDownloadPaper: (paper: QuestionPaper) => void;
+  onDeletePaper?: (paper: QuestionPaper) => void;
   onUploadForExamSet: (subject: string, examDate: string, set: PaperSet) => void;
   searchQuery: string;
 }
@@ -25,6 +27,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
   papers,
   onViewPaper,
   onDownloadPaper,
+  onDeletePaper,
   onUploadForExamSet,
   searchQuery,
 }) => {
@@ -323,7 +326,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 self-end sm:self-center">
+                        <div className="flex items-center gap-1.5 self-end sm:self-center">
                           <button
                             onClick={() => onViewPaper(paper)}
                             className="px-3 py-1 bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-purple-700 dark:hover:bg-zinc-200 text-xs font-bold rounded-lg flex items-center gap-1.5 cursor-pointer transition-all shadow-sm"
@@ -335,10 +338,24 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                           <button
                             onClick={() => onDownloadPaper(paper)}
                             title="Download Paper"
-                            className="p-1 text-zinc-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-white cursor-pointer transition-colors"
+                            className="p-1.5 text-zinc-600 dark:text-zinc-400 hover:text-purple-600 dark:hover:text-white cursor-pointer transition-colors rounded-lg hover:bg-white/10"
                           >
-                            <Download className="w-4 h-4" />
+                            <Download className="w-3.5 h-3.5" />
                           </button>
+
+                          {onDeletePaper && (
+                            <button
+                              onClick={() => {
+                                if (window.confirm(`Are you sure you want to delete ${paper.subject} (${paper.set})?`)) {
+                                  onDeletePaper(paper);
+                                }
+                              }}
+                              title="Delete Paper"
+                              className="p-1.5 text-zinc-400 hover:text-rose-500 dark:hover:text-rose-400 cursor-pointer transition-colors rounded-lg hover:bg-rose-500/10"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     );
