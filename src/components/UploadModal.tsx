@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, UploadCloud, CheckCircle2, AlertCircle, ImageIcon, Trash2, Camera, FileText } from 'lucide-react';
+import { X, UploadCloud, CheckCircle2, AlertCircle, ImageIcon, Trash2, Camera, FileText, Plus } from 'lucide-react';
 import { type QuestionPaper, type PaperSet } from '../types/paper';
 import { GRADE_10_SUBJECTS, SUBJECT_CODES } from '../data/mockPapers';
 import { PaperStorage } from '../services/storage';
@@ -40,48 +40,64 @@ export const UploadModal: React.FC<UploadModalProps> = ({
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
-      setSelectedFiles(filesArray);
+      const incoming = Array.from(e.target.files);
+      const updatedFiles = [...selectedFiles, ...incoming];
+      setSelectedFiles(updatedFiles);
       setFileError('');
 
-      const images: string[] = [];
-      for (const file of filesArray) {
+      const newImages: string[] = [];
+      for (const file of incoming) {
         if (file.type.startsWith('image/')) {
           try {
             const dataUrl = await PaperStorage.fileToDataUrl(file);
-            images.push(dataUrl);
+            newImages.push(dataUrl);
           } catch {
             // ignore
           }
         }
       }
-      setPreviewImages(images);
+      setPreviewImages((prev) => [...prev, ...newImages]);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
   const handleDrop = async (e: React.DragEvent) => {
     e.preventDefault();
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const filesArray = Array.from(e.dataTransfer.files);
-      setSelectedFiles(filesArray);
+      const incoming = Array.from(e.dataTransfer.files);
+      const updatedFiles = [...selectedFiles, ...incoming];
+      setSelectedFiles(updatedFiles);
       setFileError('');
 
-      const images: string[] = [];
-      for (const file of filesArray) {
+      const newImages: string[] = [];
+      for (const file of incoming) {
         if (file.type.startsWith('image/')) {
           try {
             const dataUrl = await PaperStorage.fileToDataUrl(file);
-            images.push(dataUrl);
+            newImages.push(dataUrl);
           } catch {
             // ignore
           }
         }
       }
-      setPreviewImages(images);
+      setPreviewImages((prev) => [...prev, ...newImages]);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
-  const removeFile = () => {
+  const removeFileAtIndex = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviewImages((prev) => prev.filter((_, i) => i !== index));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const removeAllFiles = () => {
     setSelectedFiles([]);
     setPreviewImages([]);
     if (fileInputRef.current) {
@@ -317,7 +333,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleDrop}
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-zinc-700 hover:border-zinc-400 rounded-2xl p-5 text-center cursor-pointer transition-all bg-zinc-900/40 hover:bg-zinc-900/80"
+                    className="border-2 border-dashed border-zinc-700 hover:border-purple-500 rounded-2xl p-5 text-center cursor-pointer transition-all bg-zinc-900/40 hover:bg-zinc-900/80"
                   >
                     <input
                       ref={fileInputRef}
@@ -329,37 +345,79 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                     />
 
                     {selectedFiles.length > 0 ? (
-                      <div className="flex items-center justify-between gap-3 text-left">
-                        <div className="flex items-center gap-2.5 overflow-hidden">
-                          <div className="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center flex-shrink-0 text-white border border-zinc-700">
-                            {previewImages.length > 0 ? (
-                              <ImageIcon className="w-5 h-5 text-zinc-300" />
-                            ) : (
-                              <FileText className="w-5 h-5 text-zinc-300" />
-                            )}
-                          </div>
-                          <div className="overflow-hidden">
-                            <p className="text-xs font-bold text-white truncate">
-                              {selectedFiles.length === 1
-                                ? selectedFiles[0].name
-                                : `${selectedFiles.length} photos selected`}
-                            </p>
-                            <p className="text-[11px] font-mono text-zinc-400">
-                              {(selectedFiles.reduce((acc, f) => acc + f.size, 0) / 1024).toFixed(0)} KB ready
-                            </p>
+                      <div className="space-y-3 text-left" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
+                            <ImageIcon className="w-4 h-4 text-purple-400" />
+                            {selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''} selected
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => fileInputRef.current?.click()}
+                              className="px-2.5 py-1 text-xs font-bold text-purple-400 hover:text-purple-300 hover:bg-purple-900/30 rounded-lg border border-purple-500/30 flex items-center gap-1 cursor-pointer transition-all"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Add More</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={removeAllFiles}
+                              className="p-1 text-rose-400 hover:text-rose-300 hover:bg-rose-950/30 rounded-lg cursor-pointer"
+                              title="Clear all"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
                           </div>
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeFile();
-                          }}
-                          className="p-1.5 rounded-lg text-rose-400 hover:text-rose-300 hover:bg-zinc-800"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        {/* Thumbnail Previews Grid */}
+                        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 max-h-48 overflow-y-auto pr-1">
+                          {selectedFiles.map((file, idx) => (
+                            <div
+                              key={idx}
+                              className="relative group rounded-xl overflow-hidden border border-zinc-700 bg-zinc-950 aspect-square flex items-center justify-center"
+                            >
+                              {previewImages[idx] ? (
+                                <img
+                                  src={previewImages[idx]}
+                                  alt={`Page ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="p-2 text-center">
+                                  <FileText className="w-5 h-5 text-zinc-400 mx-auto mb-1" />
+                                  <span className="text-[10px] text-zinc-400 font-mono block truncate max-w-[60px]">
+                                    {file.name}
+                                  </span>
+                                </div>
+                              )}
+
+                              <div className="absolute top-1 left-1 bg-black/70 text-white font-mono text-[9px] px-1.5 py-0.5 rounded font-bold">
+                                #{idx + 1}
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => removeFileAtIndex(idx)}
+                                className="absolute top-1 right-1 p-1 bg-rose-600/80 hover:bg-rose-600 text-white rounded-full transition-opacity opacity-80 group-hover:opacity-100 cursor-pointer"
+                                title="Remove this page"
+                              >
+                                <X className="w-2.5 h-2.5" />
+                              </button>
+                            </div>
+                          ))}
+
+                          {/* Add another photo tile */}
+                          <button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            className="rounded-xl border border-dashed border-zinc-700 hover:border-purple-500 aspect-square flex flex-col items-center justify-center gap-1 text-zinc-400 hover:text-white transition-all bg-zinc-900/30 hover:bg-zinc-900/60 cursor-pointer"
+                          >
+                            <Plus className="w-5 h-5" />
+                            <span className="text-[10px] font-bold">Add Page</span>
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div>
@@ -371,7 +429,7 @@ export const UploadModal: React.FC<UploadModalProps> = ({
                           Click to Take Photo or Browse Files
                         </p>
                         <p className="text-[10px] text-zinc-400 font-mono">
-                          Supports Multiple Photos, JPG, PNG, PDF
+                          Select multiple photos at once, or add photos one by one
                         </p>
                       </div>
                     )}
