@@ -148,10 +148,6 @@ export function App() {
     <div className={`min-h-screen flex flex-col transition-colors ${isDark ? 'text-zinc-100' : 'text-zinc-900'} selection:bg-zinc-800 selection:text-white`}>
       {/* Top Navbar */}
       <Navbar
-        onOpenUpload={() => {
-          setUploadInitialValues(undefined);
-          setUploadModalOpen(true);
-        }}
         onOpenCloudSync={() => setCloudSyncModalOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -162,32 +158,30 @@ export function App() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Simple Top Banner for Class 10 */}
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl glass-panel border border-zinc-200 dark:border-white/10 shadow-lg transition-colors">
+        {/* Clean Header with Single Primary Upload Button */}
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-200/80 dark:border-white/10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[11px] font-mono font-bold text-zinc-600 dark:text-zinc-300">
-                Grade 10 Practice Hub
+              <span className="text-xs font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 font-mono">
+                Class 10 Archive
               </span>
-              <span className="text-zinc-400">•</span>
+              <span className="text-zinc-300 dark:text-white/20">•</span>
               <span className="text-xs text-zinc-500 dark:text-zinc-400">
-                Sets A, B, C, &amp; D
+                Daily Exam Sets A, B, C &amp; D
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black font-display text-zinc-900 dark:text-white">
-              Class 10 Exam Sets Archive
+            <h1 className="text-xl sm:text-2xl font-black font-display text-zinc-900 dark:text-white tracking-tight">
+              Question Papers Vault
             </h1>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
-              Upload your daily set papers so everyone in class can revise and prepare together.
-            </p>
           </div>
 
+          {/* The Single Primary Upload Button */}
           <button
             onClick={() => {
               setUploadInitialValues(undefined);
               setUploadModalOpen(true);
             }}
-            className="px-4 py-2.5 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-black font-extrabold text-xs hover:bg-black dark:hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg flex-shrink-0"
+            className="px-5 py-2.5 rounded-xl bg-purple-700 hover:bg-purple-800 text-white dark:bg-white dark:text-black dark:hover:bg-zinc-200 font-extrabold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg active:scale-95 flex-shrink-0"
           >
             <Upload className="w-4 h-4" />
             <span>Upload Question Paper</span>

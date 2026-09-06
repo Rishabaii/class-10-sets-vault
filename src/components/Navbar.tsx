@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   BookOpen,
-  Upload,
   Search,
   X,
   Cloud,
@@ -11,7 +10,6 @@ import {
 import { CloudSync } from '../services/cloudSync';
 
 interface NavbarProps {
-  onOpenUpload: () => void;
   onOpenCloudSync: () => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
@@ -21,7 +19,6 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  onOpenUpload,
   onOpenCloudSync,
   searchQuery,
   onSearchChange,
@@ -97,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onToggleTheme}
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-xl bg-zinc-100 dark:bg-white/10 border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-all cursor-pointer"
             >
               {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
@@ -106,18 +103,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               onClick={onOpenCloudSync}
               title="Supabase Settings"
-              className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all cursor-pointer"
+              className="p-2 rounded-xl bg-zinc-100 dark:bg-white/10 border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition-all cursor-pointer"
             >
               <Cloud className="w-4 h-4" />
-            </button>
-
-            {/* Upload Set Button */}
-            <button
-              onClick={onOpenUpload}
-              className="px-4 py-2 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-black font-extrabold text-xs transition-all hover:bg-black dark:hover:bg-zinc-200 active:scale-95 flex items-center gap-1.5 cursor-pointer shadow-md"
-            >
-              <Upload className="w-3.5 h-3.5" />
-              <span>Upload Paper</span>
             </button>
           </div>
         </div>
