@@ -19,9 +19,12 @@ class CloudSyncService {
   }
 
   private init() {
-    // 1. Try environment variables first
-    const envUrl = import.meta.env.VITE_SUPABASE_URL;
-    const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    // 1. Try environment variables first, falling back to default project credentials
+    const DEFAULT_SUPABASE_URL = 'https://dvgiwvlftbmmtfeddzmp.supabase.co';
+    const DEFAULT_SUPABASE_KEY = 'sb_publishable_00omDhXOKgPv8_nVUo2sCg_gBzvp4do';
+
+    const envUrl = import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL;
+    const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_KEY;
     const envClassId = import.meta.env.VITE_CLASS_ID || DEFAULT_CLASS_ID;
 
     if (envUrl && envKey) {

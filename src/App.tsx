@@ -53,7 +53,7 @@ export function App() {
           setPapers(updated);
         });
       }
-    }, 45000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [refreshPapers]);
@@ -84,8 +84,9 @@ export function App() {
   };
 
   // Handlers
-  const handlePaperUploaded = (newPaper: QuestionPaper) => {
+  const handlePaperUploaded = async (newPaper: QuestionPaper) => {
     setPapers((prev) => [newPaper, ...prev]);
+    await PaperStorage.savePaper(newPaper);
     showToast(`Paper "${newPaper.subject} (${newPaper.set})" uploaded & saved!`);
   };
 
