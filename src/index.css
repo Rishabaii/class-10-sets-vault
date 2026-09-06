@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-vault-primary: #ffffff;
+  --color-vault-primary-hover: #e4e4e7;
+  --color-vault-cyan: #06b6d4;
+  --color-vault-emerald: #10b981;
+  --color-vault-amber: #f59e0b;
+  --color-vault-dark: #000000;
+  --color-vault-rose: #f43f5e;
+}
+
+/* Custom Typography Utility Classes */
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #000000;
+}
+.light ::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
+
+/* Dark Theme Variables */
+.dark {
+  color-scheme: dark;
+  --bg-main: #000000;
+  --bg-surface: #09090b;
+  --bg-card: #09090b;
+  --bg-card-hover: #121215;
+  --border-color: #27272a;
+  --border-color-hover: #3f3f46;
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --bg-input: #000000;
+  --bg-tag: #18181b;
+}
+
+/* Light Theme Variables */
+.light {
+  color-scheme: light;
+  --bg-main: #ffffff;
+  --bg-surface: #f4f4f5;
+  --bg-card: #ffffff;
+  --bg-card-hover: #fafafa;
+  --border-color: #e4e4e7;
+  --border-color-hover: #a1a1aa;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --bg-input: #ffffff;
+  --bg-tag: #f4f4f5;
+}
+
+/* Hard Black Noir (Dark Mode) */
+.dark body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.light body {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+
+/* Cards */
+.dark .liquid-glass-card {
+  background: rgba(12, 12, 16, 0.72) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85) !important;
+}
+.light .liquid-glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid #e4e4e7 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Panels */
+.dark .liquid-glass-panel {
+  background: rgba(8, 8, 12, 0.82) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95) !important;
+}
+.light .liquid-glass-panel {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid #e4e4e7 !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Print Friendly Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  nav, footer, .no-print, header {
+    display: none !important;
+  }
+}
