@@ -145,7 +145,7 @@ export function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`min-h-screen flex flex-col transition-colors ${isDark ? 'bg-black text-zinc-100' : 'bg-zinc-50 text-zinc-900'} selection:bg-zinc-800 selection:text-white`}>
+    <div className={`min-h-screen flex flex-col transition-colors ${isDark ? 'text-zinc-100' : 'text-zinc-900'} selection:bg-zinc-800 selection:text-white`}>
       {/* Top Navbar */}
       <Navbar
         onOpenUpload={() => {
@@ -163,7 +163,7 @@ export function App() {
       {/* Main Content Area */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Simple Top Banner for Class 10 */}
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl bg-white/90 dark:bg-zinc-950/75 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 shadow-sm transition-colors">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-3xl glass-panel border border-zinc-200 dark:border-white/10 shadow-lg transition-colors">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-[11px] font-mono font-bold text-zinc-600 dark:text-zinc-300">

@@ -126,7 +126,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
   return (
     <div className="space-y-6">
       {/* 1. Quick Filters: Subject Pills, Set Pills, & Date Search Bar */}
-      <div className="bg-white/90 dark:bg-zinc-950/75 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-sm transition-colors">
+      <div className="glass-panel border border-zinc-200 dark:border-white/10 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-md transition-all">
         {/* Subject Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400 flex items-center gap-1 flex-shrink-0 mr-1">
@@ -279,10 +279,10 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
           return (
             <div
               key={key}
-              className="bg-white/90 dark:bg-zinc-950/75 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800 rounded-3xl p-5 sm:p-6 shadow-md dark:shadow-2xl transition-all"
+              className="glass-panel border border-zinc-200 dark:border-white/10 rounded-3xl p-5 sm:p-6 shadow-xl dark:shadow-2xl transition-all"
             >
               {/* Exam Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-zinc-100 dark:border-zinc-900">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-zinc-100 dark:border-white/10">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
@@ -290,7 +290,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                       {group.examDate}
                     </span>
                     <span className="text-zinc-300 dark:text-zinc-600">•</span>
-                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300">
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-zinc-300">
                       Class 10
                     </span>
                   </div>
@@ -303,8 +303,8 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                   <span
                     className={`text-xs font-mono font-bold px-3 py-1 rounded-xl border flex items-center gap-1.5 ${
                       isComplete
-                        ? 'bg-zinc-50/80 dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-700 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-zinc-50/80 dark:bg-zinc-900/80 border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400'
+                        ? 'bg-zinc-50/80 dark:bg-zinc-900/60 border-zinc-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
+                        : 'bg-zinc-50/80 dark:bg-zinc-900/60 border-zinc-200 dark:border-white/10 text-zinc-500 dark:text-zinc-400'
                     }`}
                   >
                     {isComplete ? (
@@ -319,7 +319,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                     <button
                       onClick={() => handleShare(group.subject, group.examDate, missingSets)}
                       title="Share link with classmates"
-                      className="px-3 py-1 bg-zinc-100 dark:bg-zinc-900 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-semibold rounded-xl flex items-center gap-1 cursor-pointer transition-all"
+                      className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800/60 hover:bg-zinc-200 dark:hover:bg-zinc-700/60 border border-zinc-200 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-xs font-semibold rounded-xl flex items-center gap-1 cursor-pointer transition-all backdrop-blur-md"
                     >
                       <Share2 className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">
@@ -339,7 +339,7 @@ export const DailySetsBoard: React.FC<DailySetsBoardProps> = ({
                     return (
                       <div
                         key={setName}
-                        className="bg-zinc-50/90 dark:bg-zinc-900/60 backdrop-blur-md border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600 rounded-2xl p-4 flex flex-col justify-between transition-all shadow-sm"
+                        className="glass-card border border-zinc-200 dark:border-white/10 hover:border-zinc-300 dark:hover:border-white/20 rounded-2xl p-4 flex flex-col justify-between transition-all shadow-sm"
                       >
                         <div>
                           <div className="flex items-center justify-between gap-2 mb-2">
